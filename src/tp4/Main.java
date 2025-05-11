@@ -137,6 +137,8 @@ public class Main {
 		 */
 		/// PROBANDO EJ5
 		// Crear el grafo dirigido
+
+		/*
 		GrafoDirigido<String> grafo = new GrafoDirigido<>();
 
 		// Agregar vértices
@@ -163,7 +165,41 @@ public class Main {
 		for (Integer origen : origenes) {
 			System.out.println(origen);
 		}
+
+		 */
+
+		//PROBANDO BFSMascorto EJ6
+
+		GrafoDirigido<String> grafo = new GrafoDirigido<>();
+
+		// Agregar vértices
+		for (int i = 1; i <= 5; i++) {
+			grafo.agregarVertice(i);
+		}
+
+		// Agregar arcos
+		grafo.agregarArco(1, 2, null);
+		grafo.agregarArco(1, 4, null);
+		grafo.agregarArco(2, 3, null);
+		grafo.agregarArco(3, 4, null);
+		grafo.agregarArco(4, 5, null);
+		grafo.agregarArco(5, 2, null);
+
+		// Crear el objeto BFS
+		BFSRecorridos<String> bfs = new BFSRecorridos<>(grafo);
+
+		// Buscar camino más corto desde 1 hasta 3
+		ArrayList<Integer> camino = bfs.BFSMascorto(1, 4);
+
+		if (camino.isEmpty()) {
+			System.out.println("No hay camino desde 1 hasta 3.");
+		} else {
+			System.out.println("Camino más corto desde 1 hasta 3: " + camino);
+		}
 	}
+
+
+
 
 
 }
