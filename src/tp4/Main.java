@@ -1,13 +1,15 @@
 package ProgramacionIII.tp4;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Set;
 
 public class Main {
 
 	public static void main(String[] args) {
 
-		GrafoDirigido<String> grafo = new GrafoDirigido<>();
+		/*GrafoDirigido<String> grafo = new GrafoDirigido<>();
 
 		// Agregar vértices
 		grafo.agregarVertice(1);
@@ -76,6 +78,98 @@ public class Main {
 		grafo.borrarVertice(2);
 		System.out.println("¿Existe el vértice 2 después de borrar? " + grafo.contieneVertice(2));
 		System.out.println("¿Existe arco de 2 a 4 después de borrar vértice 2? " + grafo.existeArco(2, 4));
+
+		 */
+		/// prueba dfsRecorrido EJ4
+		/*
+			GrafoDirigido<Integer> grafo = new GrafoDirigido<>();
+
+			// Agregamos vértices
+			grafo.agregarVertice(1);
+			grafo.agregarVertice(2);
+			grafo.agregarVertice(3);
+			grafo.agregarVertice(4);
+			grafo.agregarVertice(5);
+
+			// Agregamos aristas (el grafo debe ser acíclico)
+			grafo.agregarArco(1, 2, null);
+			grafo.agregarArco(1, 3, null);
+			grafo.agregarArco(2, 4, null);
+			grafo.agregarArco(3, 4, null);
+			grafo.agregarArco(4, 5, null);
+
+			// Creamos el recorrido DFS
+			DFSRecorrido<Integer> dfs = new DFSRecorrido<>(grafo);
+
+			// Buscamos el camino más largo de 1 a 5
+			ArrayList<Integer> camino = dfs.caminoMasLargoSinCiclos(1, 5);
+
+			// Mostramos el resultado
+			System.out.println("Camino más largo sin ciclos de 1 a 5:");
+			System.out.println(camino);
+
+		 */
+
+		/*/// test tiene ciclo EJ3:
+		Grafo<Integer> grafo = new GrafoDirigido<>();
+
+		// Agregamos vértices
+		grafo.agregarVertice(1);
+		grafo.agregarVertice(2);
+		grafo.agregarVertice(3);
+		grafo.agregarVertice(4);
+
+		// Agregamos aristas (1 → 2 → 3 → 1 forma un ciclo)
+		grafo.agregarArco(1, 2, null);
+		grafo.agregarArco(2, 3, null);
+		grafo.agregarArco(3, 1, null);
+
+		// Agregamos una rama sin ciclo
+		grafo.agregarArco(3, 4, null);
+
+		// Ejecutamos la detección de ciclos
+		DFSCiclo<Integer> dfsCiclo = new DFSCiclo<>(grafo);
+		boolean tieneCiclo = dfsCiclo.tieneCiclo();
+
+		System.out.println("¿El grafo tiene ciclo? " + tieneCiclo);
+
+
+		 */
+		/// PROBANDO EJ5
+		// Crear el grafo dirigido
+		GrafoDirigido<String> grafo = new GrafoDirigido<>();
+
+		// Agregar vértices
+		for (int i = 1; i <= 5; i++) {
+			grafo.agregarVertice(i);
+		}
+
+		// Agregar arcos
+		grafo.agregarArco(1, 2, null);
+		grafo.agregarArco(1, 4, null);
+		grafo.agregarArco(2, 3, null);
+		grafo.agregarArco(3, 4, null);
+		grafo.agregarArco(4, 5, null);
+		grafo.agregarArco(5, 2, null); // forma un ciclo: 2 → 3 → 4 → 5 → 2
+
+		// Instanciar la clase que extiende DFSRecorrido
+		DFSRecorrido<String> recorrido = new DFSRecorrido<>(grafo);
+
+		// Suponiendo que implementaste buscarOrigenes en esa clase
+		Set<Integer> origenes = recorrido.buscarOrigenes(grafo, 4); // ejemplo: queremos los vértices desde donde se puede llegar a 4
+
+		// Imprimir resultados
+		System.out.println("Vértices desde los cuales se puede llegar al vértice 4:");
+		for (Integer origen : origenes) {
+			System.out.println(origen);
+		}
 	}
+
+
 }
+
+
+
+
+
 

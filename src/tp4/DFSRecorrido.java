@@ -1,10 +1,8 @@
 package ProgramacionIII.tp4;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
+
 ///Esta clase realiza un recorrido en profundidad de un grafo dado
 /// Ademas de tener al grafo dado como atributo tiene otros atributos como tiempos y colores
 /// Por cada vertice del grafo dado en su hasmap de colores la clase DFSrecorrido le da un color a cada vertice
@@ -118,6 +116,41 @@ public class DFSRecorrido<T> {
         /// asi no se van guardando caminos inecesarios o ya encontrados.
 
     }
+    /*Escriba un algoritmo que dado un grafo G y un vértice v de dicho grafo, devuelva una lista
+    con todos los vértices a partir de los cuales exista un camino en G que termine en v.
+
+     */
+    public Set<Integer> buscarOrigenes(Grafo<T> ggrafo, Integer destino){
+        Set<Integer> origenes = new HashSet<>();
+        Iterator<Integer> it = ggrafo.obtenerVertices();
+        while (it.hasNext()){
+            Integer posibleOri = it.next();
+            Integer esOri = posibleOri;
+            boolean encontro = false;
+            if(posibleOri!=destino) {
+                DFSVisitBsqOrigenes(posibleOri, destino, esOri, origenes, ggrafo);
+            }
+        }
+
+        return origenes;
+    }
+    private void DFSVisitBsqOrigenes(Integer v,Integer destino,Integer origen,Set<Integer> origenes,Grafo<T> ggrafo){
+
+        color.put(v,"AMARILLO");
+        if(v.equals(destino)){
+            origenes.add(origen);
+        }else{
+            Iterator<Integer> ady = ggrafo.obtenerAdyacentes(v);
+            while (ady.hasNext()){
+                Integer sig = ady.next();
+                if(color.get(sig).equals("BLANCO")){
+                    DFSVisitBsqOrigenes(sig,destino,origen,origenes,ggrafo);
+                }
+            }
+        }
+        color.put(v,"BLANCO");
+    }
+
 
     // Métodos para consultar resultados
     public Map<Integer, Integer> getTiempoDescubrimiento() {
