@@ -68,7 +68,7 @@ public class DFSRecorrido<T> {
     public ArrayList<Integer> caminoMasLargoSinCiclos(Integer origen, Integer destino){
         ArrayList<Integer>resultado = new ArrayList<>();
         ArrayList<Integer>caminoActual = new ArrayList<>();
-
+        /// creo los arreglos para ir guardando los caminos encontrados y comparando
         if(origen != null && destino != null && origen != destino){
             caminoLargo(origen,destino,resultado,caminoActual);
         }
@@ -78,16 +78,15 @@ public class DFSRecorrido<T> {
     }
 
     private ArrayList<Integer> caminoLargo(Integer origen,Integer destino,ArrayList<Integer> resultado, ArrayList<Integer> caminoActual){
-        caminoActual.add(origen); ///preg esto
-        Iterator<Integer> adyacentes = grafo.obtenerAdyacentes(origen);
+        caminoActual.add(origen);
+        Iterator<Integer> adyacentes = grafo.obtenerAdyacentes(origen); ///creo un iterador con los adyacentes
         while (adyacentes.hasNext()){
             Integer v = adyacentes.next();
-            if(color.get(v).equals("BLANCO")&& !v.equals(destino)){
+            if(color.get(v).equals("BLANCO")){
                 dfsVisitMasLargo(v,destino,resultado,caminoActual);
             }
         }
         return resultado;
-
     }
 
     private void dfsVisitMasLargo(Integer actual,Integer destino,ArrayList<Integer> resultado, ArrayList<Integer> caminoActual){
@@ -95,6 +94,8 @@ public class DFSRecorrido<T> {
         color.put(actual, "AMARILLO");
 
         if(actual.equals(destino)){
+            /// si el camino actual es mas largo que el ya guardado o el arreglo resultado esta vacio
+            /// Aunque el isEmpty en este caso no es necesario porque camino actual como minimo siempre va a tener 1
             if (caminoActual.size()> resultado.size() || resultado.isEmpty()){
                 resultado.clear();
                 resultado.addAll(new ArrayList<>(caminoActual));

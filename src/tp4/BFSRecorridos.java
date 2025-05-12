@@ -48,28 +48,33 @@ public class BFSRecorridos<T> {
             color.put(u, "NEGRO");
         }
     }
+    /// Este metodo busca por nivel el camino mas corto para llegar desde un origen dado hasta un destino dado
 
     public ArrayList<Integer> BFSMascorto(Integer origen, Integer destino){
         color.put(origen,"GRIS");
+        /// El primero siempre tiene distancia 0 y no tiene padre
         distancia.put(origen,0);
         padre.put(origen,null);
 
+        /// cola queque, maneja en forma de pila inversa sus elementos, el primero en agregarse es el primero en salir
         Queue<Integer> cola = new LinkedList<>();
         cola.add(origen);
 
         while (!cola.isEmpty()){
-            Integer vp = cola.poll();
+            Integer vp = cola.poll();/// Este vertice siempre tomaria el rol de vertice Padre
             Iterator<Integer> ady = grafo.obtenerAdyacentes(vp);
 
             while(ady.hasNext()){
-                Integer vh = ady.next();
+                Integer vh = ady.next();///Los adyacentes serian sus hijos
                 if(color.get(vh).equals("BLANCO")){
                     color.put(vh, "GRIS");
-                    distancia.put(vh, distancia.get(vp) + 1);
+                    distancia.put(vh, distancia.get(vp) + 1);///La distancia de los hijos siempre es la de tu padre +1
                     padre.put(vh, vp);
                     if(vh.equals(destino)){
+                        /// Si ya encontre el destino creo un arreglo con los padres.
                         ArrayList<Integer> camino = new ArrayList<>();
-                        camino.addAll(getPadres(vh));
+                        /// le paso su padre por parametro
+                        camino.addAll(getPadres(padre.get(vh)));
                         return camino;
                     }
                     cola.add(vh);
@@ -82,12 +87,12 @@ public class BFSRecorridos<T> {
         return new ArrayList<>();
     }
 
-    private ArrayList<Integer> getPadres(Integer hijo){
+    /// este metodo recorre los padres actualizando la variable vPadre, de padre en padre y devuelve un arreglo con todos
+    private ArrayList<Integer> getPadres(Integer vPadre){
         ArrayList<Integer> camino = new ArrayList<>();
-        hijo = padre.get(hijo);//salteo el destino porque ahora hijo es = destino
-        while (hijo != null){
-            camino.add(0,hijo);
-            hijo = padre.get(hijo);
+        while (vPadre != null){
+            camino.add(0,vPadre);
+            vPadre = padre.get(vPadre);
         }
         return camino;
     }

@@ -81,7 +81,7 @@ public class Main {
 
 		 */
 		/// prueba dfsRecorrido EJ4
-		/*
+
 			GrafoDirigido<Integer> grafo = new GrafoDirigido<>();
 
 			// Agregamos vértices
@@ -102,13 +102,13 @@ public class Main {
 			DFSRecorrido<Integer> dfs = new DFSRecorrido<>(grafo);
 
 			// Buscamos el camino más largo de 1 a 5
-			ArrayList<Integer> camino = dfs.caminoMasLargoSinCiclos(1, 5);
+			ArrayList<Integer> camino = dfs.caminoMasLargoSinCiclos(1, 3);
 
 			// Mostramos el resultado
 			System.out.println("Camino más largo sin ciclos de 1 a 5:");
 			System.out.println(camino);
 
-		 */
+
 
 		/*/// test tiene ciclo EJ3:
 		Grafo<Integer> grafo = new GrafoDirigido<>();
@@ -168,8 +168,8 @@ public class Main {
 
 		 */
 
-		//PROBANDO BFSMascorto EJ6
-
+		///PROBANDO BFSMascorto EJ6
+        /*
 		GrafoDirigido<String> grafo = new GrafoDirigido<>();
 
 		// Agregar vértices
@@ -189,14 +189,18 @@ public class Main {
 		BFSRecorridos<String> bfs = new BFSRecorridos<>(grafo);
 
 		// Buscar camino más corto desde 1 hasta 3
-		ArrayList<Integer> camino = bfs.BFSMascorto(1, 4);
+		ArrayList<Integer> camino = bfs.BFSMascorto(1, 3);
 
 		if (camino.isEmpty()) {
 			System.out.println("No hay camino desde 1 hasta 3.");
 		} else {
 			System.out.println("Camino más corto desde 1 hasta 3: " + camino);
 		}
+
+         */
 	}
+
+
 
 
 
