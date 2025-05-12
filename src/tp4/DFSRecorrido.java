@@ -155,13 +155,14 @@ public class DFSRecorrido<T> {
     }
 
     /// EJERCICIO 8:
-
+/// este metodo en un grafo dirigido encuentra el camino mas largo sumando los valores  asignados a cada vertice y a sus arcos
     public Integer DFSCaminoCritico(){
         Integer resultado= 0;
         Integer suma=0;
         Iterator<Integer> it = grafo.obtenerVertices();
         while (it.hasNext()){
             Integer vp = it.next();
+            /// cada vez que vuelve a esta parte es porque llego a una hoja
            Integer posibleCamino = encontrarCamino(suma,resultado,vp);
            if(posibleCamino>resultado){
                resultado = posibleCamino;
@@ -173,12 +174,18 @@ public class DFSRecorrido<T> {
     private Integer encontrarCamino(Integer suma, Integer resultado, Integer vp){
         color.put(vp,"AMARILLO");
         suma += duracionTareas.get(vp);
+        /// resultado se vuelve suma para en el if de mas abajo poder comparalo con el posible camino
+        /// y en el caso que no entre al while es porque esta en una hoja
+        /// y al estar en una hoja la suma de ese vertice seria el resultado final de ese recorrido
         resultado = suma;
         Iterator<Integer> it = grafo.obtenerAdyacentes(vp);
         while (it.hasNext()){
             Integer v = it.next();
             Integer tiempoArco = (Integer)grafo.obtenerArco(vp,v).getEtiqueta();
+            /// casteamos porque la etiqueta es del tipo T y nos aseguramos de crearla integer
             if(color.get(v).equals("BLANCO")){
+                /// ejecutamos el metodo recrusivo y guardamos el valor de ese camino
+                /// para que suma se vaya con el valor del tiempo del arco hay que agregarlo antes de entrar al metodo
                 Integer posibleCamino = encontrarCamino(suma+tiempoArco,resultado,v);
                 if (posibleCamino> resultado){
                     resultado = posibleCamino;
