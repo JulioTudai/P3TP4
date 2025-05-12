@@ -1,13 +1,11 @@
 package ProgramacionIII.tp4;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
 
 	public static void main(String[] args) {
+
 
 		/*GrafoDirigido<String> grafo = new GrafoDirigido<>();
 
@@ -80,7 +78,7 @@ public class Main {
 		System.out.println("¿Existe arco de 2 a 4 después de borrar vértice 2? " + grafo.existeArco(2, 4));
 
 		 */
-		/// prueba dfsRecorrido EJ4
+		/*/// prueba dfsRecorrido EJ4
 
 			GrafoDirigido<Integer> grafo = new GrafoDirigido<>();
 
@@ -111,7 +109,7 @@ public class Main {
 
 
 		/*/// test tiene ciclo EJ3:
-		Grafo<Integer> grafo = new GrafoDirigido<>();
+		/*Grafo<Integer> grafo = new GrafoDirigido<>();
 
 		// Agregamos vértices
 		grafo.agregarVertice(1);
@@ -198,13 +196,54 @@ public class Main {
 		}
 
          */
+		/// Probando ejercico 8
+		GrafoDirigido<Integer> grafo = new GrafoDirigido<>();
+
+		// Crear vértices
+		for (int i = 0; i <= 12; i++) {
+			grafo.agregarVertice(i);
+		}
+
+		// Tiempos de duración de cada tarea (vértices)
+		Map<Integer, Integer> duracionTarea = Map.ofEntries(
+				Map.entry(0, 0),
+				Map.entry(1, 4),
+				Map.entry(2, 18),
+				Map.entry(3, 4),
+				Map.entry(4, 13),
+				Map.entry(5, 22),
+				Map.entry(6, 18),
+				Map.entry(7, 12),
+				Map.entry(8, 3),
+				Map.entry(9, 2),
+				Map.entry(10, 3),
+				Map.entry(11, 1),
+				Map.entry(12, 5)
+		);
+
+		// Agregar arcos con sus pesos (demoras entre tareas)
+		grafo.agregarArco(0, 1, 3);
+		grafo.agregarArco(0, 2, 1);
+		grafo.agregarArco(1, 3, 3);
+		grafo.agregarArco(2, 5, 18);
+		grafo.agregarArco(2, 7, 18);
+		grafo.agregarArco(3, 4, 5);
+		grafo.agregarArco(3, 5, 8);
+		grafo.agregarArco(4, 11, 3);
+		grafo.agregarArco(5, 6, 2);
+		grafo.agregarArco(6, 12, 9);
+		grafo.agregarArco(6, 10, 6);
+		grafo.agregarArco(7, 8, 7);
+		grafo.agregarArco(8, 9, 4);
+		grafo.agregarArco(9, 10, 1);
+		grafo.agregarArco(11, 12, 9);
+
+
+		DFSRecorrido<Integer> dfs = new DFSRecorrido<>(grafo,duracionTarea);
+		System.out.println("Duración del camino crítico: " + dfs.DFSCaminoCritico() + " hs");
+
+
 	}
-
-
-
-
-
-
 
 }
 

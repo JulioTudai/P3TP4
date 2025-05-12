@@ -15,14 +15,16 @@ public class DFSRecorrido<T> {
     protected Map<Integer, Integer> tiempoDescubrimiento;
     protected Map<Integer, Integer> tiempoFinalizacion;
     protected int tiempo;
+    protected Map<T, Integer> duracionTareas;
 
 
-    public DFSRecorrido(Grafo<T> grafo) {
+    public DFSRecorrido(Grafo<T> grafo, Map<T, Integer> duracionTareas) {
         this.grafo = grafo;
         this.color = new HashMap<>();
         this.tiempoDescubrimiento = new HashMap<>();
         this.tiempoFinalizacion = new HashMap<>();
         this.tiempo = 0;
+        this.duracionTareas = duracionTareas;
 
         Iterator<Integer> it = grafo.obtenerVertices();
         while (it.hasNext()) {
@@ -150,6 +152,43 @@ public class DFSRecorrido<T> {
             }
         }
         color.put(v,"BLANCO");
+    }
+
+    /// EJERCICIO 8:
+
+    public Integer DFSCaminoCritico(){
+        Integer resultado= 0;
+        Integer suma=0;
+        Iterator<Integer> it = grafo.obtenerVertices();
+        while (it.hasNext()){
+            Integer vp = it.next();
+           Integer posibleCamino = encontrarCamino(suma,resultado,vp);
+           if(posibleCamino>resultado){
+               resultado = posibleCamino;
+           }
+        }
+        return resultado;
+    }
+
+    private Integer encontrarCamino(Integer suma, Integer resultado, Integer vp){
+        color.put(vp,"AMARILLO");
+        suma += duracionTareas.get(vp);
+        resultado = suma;
+        Iterator<Integer> it = grafo.obtenerAdyacentes(vp);
+        while (it.hasNext()){
+            Integer v = it.next();
+            Integer tiempoArco = (Integer)grafo.obtenerArco(vp,v).getEtiqueta();
+            if(color.get(v).equals("BLANCO")){
+                Integer posibleCamino = encontrarCamino(suma+tiempoArco,resultado,v);
+                if (posibleCamino> resultado){
+                    resultado = posibleCamino;
+                }
+            }
+        }
+
+        color.put(vp,"BLANCO");
+        return resultado;
+
     }
 
 
