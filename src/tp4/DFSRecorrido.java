@@ -108,6 +108,7 @@ public class DFSRecorrido<T> {
             while (adyacentes.hasNext()) {
                 Integer v = adyacentes.next();
                 if (color.get(v).equals("BLANCO")) {
+
                     dfsVisitMasLargo(v, destino, resultado, caminoActual);
                 }
             }
