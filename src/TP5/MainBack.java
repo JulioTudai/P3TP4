@@ -28,7 +28,8 @@ public class MainBack {
         System.out.println(arr);
 
          */
-
+        /// EJERCICIO 3
+        /*
         ArrayList<Integer> valores = new ArrayList<>();
 
         valores.add(3);
@@ -41,5 +42,32 @@ public class MainBack {
 
         System.out.println(tp.sumasCorrectas(valores, 10));
 
+         */
+
+        /// ejercicio 4
+        ArrayList<Integer> valores = new ArrayList<>();
+
+        // Cargar valores del 1 al 7
+        for (int i = 1; i <= 7; i++) {
+            valores.add(i);
+        }
+
+        // Crear instancia de la clase que contiene el método
+        TP5EJ4 instancia = new TP5EJ4(); // reemplazá "TuClase" por el nombre real de tu clase
+
+        ArrayList<ArrayList<Integer>> soluciones = instancia.conjuntosDeSumas(valores);
+
+        // Mostrar resultados
+        if (soluciones.isEmpty()) {
+            System.out.println("No se encontraron particiones con suma igual.");
+        } else {
+            System.out.println("Particiones encontradas:");
+            for (int i = 0; i < soluciones.size(); i += 2) {
+                System.out.println("A: " + soluciones.get(i));
+                System.out.println("B: " + soluciones.get(i + 1));
+                System.out.println("------------");
+            }
+        }
     }
 }
+
