@@ -44,6 +44,11 @@ public class TP5EJ4 {
         }
         else {
             /// Ahora tengo que iterar sobre valores
+            ///aca empiezo desde index para que cada vez que entra a un llamado recursivo
+            ///empiece desde el siguiente valor del que ya agrego al arreglo a porque sino
+            /// va a generar conjuntos de sumas iguales pero en distinto orden [1,2] = 3/ [2,1] = 3
+            ///Esa parte de pasar el index simplifica los resultados ya no hay que ordenarlos para mirar si no son lo mismo
+            ///y a su vez simplifica la poda
             for (int i = index; i< valores.size()-1;i++) {
                 if (!poda(a,valores.get(i),mitad)) {
                     a.add(valores.get(i));
@@ -65,7 +70,7 @@ public class TP5EJ4 {
     }
     private void cargarSoluciones(ArrayList<Integer> a,ArrayList<Integer> b, ArrayList<ArrayList<Integer>> resultado){
         /// primero ordenar las soluciones, porque me puede dar los mismos numeros en orden diferente y las comvinaciones son muchas
-        Collections.sort(a);
+        /*Collections.sort(a);
         Collections.sort(b);
         boolean esta = false;
         for (ArrayList<Integer> y:resultado){
@@ -77,6 +82,10 @@ public class TP5EJ4 {
             resultado.add(new ArrayList<>(a));
             resultado.add(new ArrayList<>(b));
         }
+
+         */
+        resultado.add(new ArrayList<>(a));
+        resultado.add(new ArrayList<>(b));
 
         /*
         Collections.sort(a);
