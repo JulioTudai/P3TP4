@@ -1,89 +1,102 @@
 package ProgramacionIII.TP5;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class TP5E5 {
-    /*Asignación de tareas a procesadores. Se tienen m procesadores idénticos y n tareas con un tiempo
-de ejecución dado. Se requiere encontrar una asignación de tareas a procesadores de manera de
-minimizar el tiempo de ejecución del total de tareas.
 
-     */
     private int cantidadProcesadores;
     private List<Integer> tareas; // duración de cada tarea
+    private List<List<Integer>> mejorAsignacion;
+    private int mejorTiempo;
     private HashMap<Integer, List<Integer>> procesadores;
 
     public TP5E5(int cantidadProcesadores, List<Integer> tareas) {
         this.cantidadProcesadores = cantidadProcesadores;
-        this.tareas = tareas;
+        this.tareas = new ArrayList<>(tareas);
+        this.tareas.sort(Collections.reverseOrder()); // ordenar tareas de mayor a menor (mejora poda)
         this.procesadores = new HashMap<>();
+        this.mejorTiempo = Integer.MAX_VALUE;
+        this.mejorAsignacion = new ArrayList<>();
 
-
-        // Inicializo los procesadores con listas vacías
         for (int i = 0; i < cantidadProcesadores; i++) {
             procesadores.put(i, new ArrayList<>());
         }
     }
 
+    public void asignarTareas() {
+        backtrack(0);
+        mostrarMejorSolucion();
+    }
 
-    public void AsignarTareas(){
-        Integer tareaMayor = 0;
-        for(Integer i: tareas){
-            if (tareaMayor < i){
-                tareaMayor=i;
+    private void backtrack(int indiceTarea) {
+        if (indiceTarea == tareas.size()) {
+            int tiempoActual = calcularTiempoMaximo();
+            if (tiempoActual < mejorTiempo) {
+                mejorTiempo = tiempoActual;
+                guardarMejorAsignacion();
+                System.out.println(" Nueva mejor solución encontrada con tiempo: " + mejorTiempo);
+                imprimirProcesadores();
             }
-        }
-        for( int i =0; i< procesadores.size(); i++){
-            menorTiempo(tareaMayor,i);
-
+            return;
         }
 
-    }
+        int tareaActual = tareas.get(indiceTarea);
+        for (int i = 0; i < cantidadProcesadores; i++) {
+            procesadores.get(i).add(tareaActual);
+            int tiempoParcial = calcularTiempoMaximo();
+            System.out.println("→ Asigno tarea " + tareaActual + " al procesador " + i + " | Tiempo parcial: " + tiempoParcial);
+            imprimirProcesadores();
 
-    private void menorTiempo(Integer tareaMayor,Integer procesador){
+            if (tiempoParcial < mejorTiempo) {
+                backtrack(indiceTarea + 1); // Sigo con la siguiente tarea
+            } else {
+                System.out.println("Poda: esta rama supera el mejor tiempo actual (" + mejorTiempo + ")");
+            }
 
-        if(esSolucion(tareaMayor, Procesador)){
-
-
-        }
-    }
-
-
-
-
-    // Método auxiliar: sumar carga actual de un procesador
-    public int cargaDelProcesador(int idProcesador) {
-        return procesadores.get(idProcesador)
-                .stream()
-                .mapToInt(Integer::intValue)
-                .sum();
-    }
-
-    // Método auxiliar: asignar tarea a un procesador
-    public void asignarTarea(int idProcesador, int duracionTarea) {
-        procesadores.get(idProcesador).add(duracionTarea);
-    }
-
-    // Método auxiliar: desasignar última tarea de un procesador (para backtrack)
-    public void desasignarUltimaTarea(int idProcesador) {
-        List<Integer> tareasDelProcesador = procesadores.get(idProcesador);
-        if (!tareasDelProcesador.isEmpty()) {
-            tareasDelProcesador.remove(tareasDelProcesador.size() - 1);
+            procesadores.get(i).remove(procesadores.get(i).size() - 1); // Backtrack
+            System.out.println("↩️  Deshago tarea " + tareaActual + " del procesador " + i);
+            imprimirProcesadores();
         }
     }
 
-    // Getters
-    public List<Integer> getTareas() {
-        return tareas;
+    private int calcularTiempoMaximo() {
+        int max = 0;
+        for (List<Integer> lista : procesadores.values()) {
+            int suma = lista.stream().mapToInt(Integer::intValue).sum();
+            max = Math.max(max, suma);
+        }
+        return max;
     }
 
-    public HashMap<Integer, List<Integer>> getAsignacionPorProcesador() {
-        return procesadores;
+    private void guardarMejorAsignacion() {
+        mejorAsignacion.clear();
+        for (int i = 0; i < cantidadProcesadores; i++) {
+            mejorAsignacion.add(new ArrayList<>(procesadores.get(i)));
+        }
     }
 
-    public int getCantidadProcesadores() {
-        return cantidadProcesadores;
+    private void imprimirProcesadores() {
+        for (int i = 0; i < cantidadProcesadores; i++) {
+            System.out.println("  P" + i + ": " + procesadores.get(i));
+        }
+        System.out.println();
+    }
+
+    private void mostrarMejorSolucion() {
+        System.out.println("✅ Mejor asignación encontrada:");
+        for (int i = 0; i < mejorAsignacion.size(); i++) {
+            List<Integer> tareas = mejorAsignacion.get(i);
+            int suma = tareas.stream().mapToInt(Integer::intValue).sum();
+            System.out.println("  Procesador " + i + " → Tareas: " + tareas + " | Total: " + suma);
+        }
+        System.out.println("⏱️  Tiempo total (makespan): " + mejorTiempo);
+    }
+
+    // Para probar
+    public static void main(String[] args) {
+        List<Integer> tareas = Arrays.asList(4, 7, 2, 1, 8); // 8 tareas
+        TP5E5 asignador = new TP5E5(2, tareas); // 3 procesadores
+        asignador.asignarTareas();
     }
 }
+
