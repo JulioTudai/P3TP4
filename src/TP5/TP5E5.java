@@ -36,19 +36,21 @@ minimizar el tiempo de ejecución del total de tareas.
             }
         }
         for( int i =0; i< procesadores.size(); i++){
-            menorTiempo(tareaMayor,i);
+           // menorTiempo(tareaMayor,i);
 
         }
 
     }
 
-    private void menorTiempo(Integer tareaMayor,Integer procesador){
+    /*private void menorTiempo(Integer tareaMayor,Integer procesador){
 
         if(esSolucion(tareaMayor, Procesador)){
 
 
         }
     }
+
+     */
 
 
 
