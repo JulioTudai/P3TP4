@@ -3,7 +3,7 @@ package ProgramacionIII.TP5;
 import java.awt.*;
 
 public class TP5EJ6 {
-
+/*
     enum Color {
         VERDE,
         MARRON
@@ -39,10 +39,11 @@ public class TP5EJ6 {
 
     public void arreCaballito(int i, int j, Color[][] camino) {
 
-        if (esSolucion(i, j, camino)) {
+       if (esSolucion(i, j, camino)) {
 
 
-        } else {
+        /}
+        else {
             if (j + 1 <= this.n && jardin[i][j + 1] == Color.VERDE) {
                 jardin[i][j + 1] = Color.MARRON;
                 arreCaballito(i, j + 1, this.jardin);
@@ -69,6 +70,8 @@ public class TP5EJ6 {
     }
 
 
+
+
     private void imprimirJardin(Color[][] camino, int n) {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -78,7 +81,13 @@ public class TP5EJ6 {
         }
 
     }
+
+        */
+
+
 }
+
+
 
 
 
