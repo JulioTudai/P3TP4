@@ -4,7 +4,7 @@ import java.util.*;
 
 public class TP5E5 {
 
-     */
+
     private int cantidadProcesadores;
     private List<Integer> tareas; // duración de cada tarea
     private List<List<Integer>> mejorAsignacion;

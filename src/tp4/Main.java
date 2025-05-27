@@ -196,6 +196,7 @@ public class Main {
 		}
 
          */
+		/*
 		/// Probando ejercico 8
 		GrafoDirigido<Integer> grafo = new GrafoDirigido<>();
 
@@ -243,8 +244,33 @@ public class Main {
 		System.out.println("Duración del camino crítico: " + dfs.DFSCaminoCritico() + " hs");
 
 
-	}
+	}*/
+		// Probando ejercicio 7
+		GrafoNoDirigido<String> grafo = new GrafoNoDirigido<>();
+		grafo.agregarVertice(1); // Buenos Aires
+		grafo.agregarVertice(2); // Tandil
+		grafo.agregarVertice(3); // Las Flores
+		grafo.agregarVertice(4); // Rauch
+		grafo.agregarVertice(5); // Azul
+// agregar más ciudades...
 
+		grafo.agregarArco(1, 3, null); // Buenos Aires - Las Flores
+		grafo.agregarArco(3, 4, null); // Las Flores - Rauch (cortado)
+		grafo.agregarArco(4, 2, null); // Rauch - Tandil
+		grafo.agregarArco(1, 2, null); // Buenos Aires - Tandil (ruta directa)
+		grafo.agregarArco(1, 5, null); // Buenos Aires - Azul
+		grafo.agregarArco(5, 2, null); // Azul - Tandil
+// más arcos...
+
+		TP4EJ7 caminos = new TP4EJ7(grafo);
+		List<List<Integer>> caminosAlternativos = caminos.obtenerCaminos(1, 2, 3, 4); // evitando 3-4
+
+		for (List<Integer> camino : caminosAlternativos) {
+			System.out.println(camino);
+		}
+
+
+	}
 }
 
 

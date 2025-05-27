@@ -70,59 +70,44 @@ public class DFSRecorrido<T> {
     public ArrayList<Integer> caminoMasLargoSinCiclos(Integer origen, Integer destino){
         ArrayList<Integer>resultado = new ArrayList<>();
         ArrayList<Integer>caminoActual = new ArrayList<>();
+
         /// creo los arreglos para ir guardando los caminos encontrados y comparando
         if(origen != null && destino != null && origen != destino){
             caminoLargo(origen,destino,resultado,caminoActual);
         }
 
         return resultado;
-
     }
 
-    private ArrayList<Integer> caminoLargo(Integer origen,Integer destino,ArrayList<Integer> resultado, ArrayList<Integer> caminoActual){
-        caminoActual.add(origen);
-        Iterator<Integer> adyacentes = grafo.obtenerAdyacentes(origen); ///creo un iterador con los adyacentes
-        while (adyacentes.hasNext()){
-            Integer v = adyacentes.next();
-            if(color.get(v).equals("BLANCO")){
-                dfsVisitMasLargo(v,destino,resultado,caminoActual);
-            }
-        }
-        return resultado;
-    }
-
-    private void dfsVisitMasLargo(Integer actual,Integer destino,ArrayList<Integer> resultado, ArrayList<Integer> caminoActual){
+    private void caminoLargo(Integer actual,Integer destino,ArrayList<Integer> resultado, ArrayList<Integer> caminoActual){
         caminoActual.add(actual);
-        color.put(actual, "AMARILLO");
+        color.put(actual,"AMARILLO");
 
         if(actual.equals(destino)){
-            /// si el camino actual es mas largo que el ya guardado o el arreglo resultado esta vacio
-            /// Aunque el isEmpty en este caso no es necesario porque camino actual como minimo siempre va a tener 1
-            if (caminoActual.size()> resultado.size() || resultado.isEmpty()){
+            if(caminoActual.size() > resultado.size()){
                 resultado.clear();
                 resultado.addAll(new ArrayList<>(caminoActual));
             }
         }
         else {
-            Iterator<Integer> adyacentes = grafo.obtenerAdyacentes(actual);
+            Iterator<Integer> adyacentes = grafo.obtenerAdyacentes(actual); ///creo un iterador con los adyacentes
             while (adyacentes.hasNext()) {
                 Integer v = adyacentes.next();
-                if (color.get(v).equals("BLANCO")) {
-
-                    dfsVisitMasLargo(v, destino, resultado, caminoActual);
+                if (color.get(v).equals("BLANCO")) {//suponiendo que es aciclico no necesito manejar los colores,
+                    //lo puedo resolver con un contains de caminoActual y listo
+                    caminoLargo(v, destino, resultado, caminoActual);
                 }
+
             }
         }
-        /// no los tengo que pintar de negros para que siga iterando ?
-        /// Los tiempos no tiene sentido que los vaya actualizando no ?
         color.put(actual,"BLANCO");
         caminoActual.remove(caminoActual.size()-1);/// esto le va sacando una iteracion a la recursion
         /// asi no se van guardando caminos inecesarios o ya encontrados.
 
     }
+
     /*Escriba un algoritmo que dado un grafo G y un vértice v de dicho grafo, devuelva una lista
     con todos los vértices a partir de los cuales exista un camino en G que termine en v.
-
      */
     public Set<Integer> buscarOrigenes(Grafo<T> ggrafo, Integer destino){
         Set<Integer> origenes = new HashSet<>();

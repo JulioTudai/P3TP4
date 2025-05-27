@@ -99,7 +99,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	@Override
 	/// TERMINADO
 	public Iterator<Integer> obtenerVertices() {
-		/// el set no permite repetidos asi no agregamos vertices que ya fueron agregados por set destinos de otro origen.
+		/// el set no permite repetidos asi no agregamos vertices que ya fueron agregados por ser destinos de otro origen.
 		Set<Integer> todosLosVertices= new HashSet<>();
 		/// Map.Entry sirve para manejar mas comodo las solicitudes get key y get values
 		/// vertices.EntrySet() devuelve un mapa con toods los origenes "basicamente lo mismo pero mas facil de maneajar para esta tarea
