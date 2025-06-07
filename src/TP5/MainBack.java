@@ -8,8 +8,8 @@ public class MainBack {
 
     public static void main(String[] args) {
 
-
-        /*BackTranking back = new BackTranking<>();
+/*
+        BackTranking back = new BackTranking<>();
         GrafoDirigido<Integer> grafo = new GrafoDirigido<>();
 
         // Crear vértices
@@ -27,9 +27,11 @@ public class MainBack {
         back.buscarSalidaMasejos(grafo,1,4,new ArrayList<>() ,arr);
         System.out.println(arr);
 
-         */
+
+ */
+
         /// EJERCICIO 3
-        /*
+
         ArrayList<Integer> valores = new ArrayList<>();
 
         valores.add(3);
@@ -42,9 +44,9 @@ public class MainBack {
 
         System.out.println(tp.sumasCorrectas(valores, 10));
 
-         */
 
-        /// ejercicio 4
+
+        /*/// ejercicio 4
         ArrayList<Integer> valores = new ArrayList<>();
 
         // Cargar valores del 1 al 7
@@ -68,6 +70,8 @@ public class MainBack {
                 System.out.println("------------");
             }
         }
+
+         */
     }
 }
 

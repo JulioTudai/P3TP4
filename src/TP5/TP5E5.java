@@ -84,13 +84,13 @@ public class TP5E5 {
     }
 
     private void mostrarMejorSolucion() {
-        System.out.println("✅ Mejor asignación encontrada:");
+        System.out.println(" Mejor asignación encontrada:");
         for (int i = 0; i < mejorAsignacion.size(); i++) {
             List<Integer> tareas = mejorAsignacion.get(i);
             int suma = tareas.stream().mapToInt(Integer::intValue).sum();
             System.out.println("  Procesador " + i + " → Tareas: " + tareas + " | Total: " + suma);
         }
-        System.out.println("⏱️  Tiempo total (makespan): " + mejorTiempo);
+        System.out.println(" Tiempo total (makespan): " + mejorTiempo);
     }
 
     // Para probar
