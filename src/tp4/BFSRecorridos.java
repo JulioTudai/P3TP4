@@ -48,6 +48,12 @@ public class BFSRecorridos<T> {
             color.put(u, "NEGRO");
         }
     }
+    //TODO: EJERCICIO 6
+    /*Supongamos que una ciudad se encuentra modelada mediante un grafo, donde cada nodo
+es una esquina, y las aristas representan las calles. Diseñe un algoritmo tal que dadas dos
+esquinas, devuelva el camino más corto entre ambas de manera de caminar la menor
+cantidad de cuadras posible.
+     */
     /// Este metodo busca por nivel el camino mas corto para llegar desde un origen dado hasta un destino dado
 
     public ArrayList<Integer> BFSMascorto(Integer origen, Integer destino){

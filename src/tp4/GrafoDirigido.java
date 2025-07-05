@@ -20,7 +20,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	public void borrarVertice(int verticeId) {
 		vertices.remove(verticeId);
 		/// Borra todos los arcos que llegan al vértice desde otros vértices
-		/// Vaues() devuelve todos los values te los hasmap presentes en vertices
+		/// Values() devuelve todos los values te los hasmap presentes en vertices
 		for (HashMap<Integer, Arco<T>> adyacentes : vertices.values()) {
 			adyacentes.remove(verticeId); // remueve si existe el destino
 		}

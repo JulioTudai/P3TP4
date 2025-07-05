@@ -245,7 +245,7 @@ public class Main {
 
 
 	}*/
-		// Probando ejercicio 7
+		/*// Probando ejercicio 7
 		GrafoNoDirigido<String> grafo = new GrafoNoDirigido<>();
 		grafo.agregarVertice(1); // Buenos Aires
 		grafo.agregarVertice(2); // Tandil
@@ -270,7 +270,97 @@ public class Main {
 		}
 
 
+		 */
+
+		/*
+		GrafoNoDirigido<String> grafo = new GrafoNoDirigido<>();
+
+		// Agregamos 9 vértices
+		for (int i = 1; i <= 9; i++) {
+			grafo.agregarVertice(i);
+		}
+
+		// Ciclo de 3 vértices: 1-2-3-1
+		grafo.agregarArco(1, 2, "A");
+		grafo.agregarArco(2, 3, "B");
+		grafo.agregarArco(3, 1, "C");
+
+		// Ciclo de 4 vértices: 4-5-6-7-4
+		grafo.agregarArco(4, 5, "D");
+		grafo.agregarArco(5, 6, "E");
+		grafo.agregarArco(6, 7, "F");
+		grafo.agregarArco(7, 4, "G");
+
+		// Los vértices 8 y 9 quedan aislados
+
+		// Ahora armamos el algoritmo sobre el grafo
+
+		EJ4Parcial2023<String> buscador = new EJ4Parcial2023<>(grafo);
+
+
+		// Antes de ejecutar el algoritmo tenemos que inicializar los mapas de color y padre:
+		Iterator<Integer> vertices = grafo.obtenerVertices();
+		while (vertices.hasNext()) {
+			Integer v = vertices.next();
+			buscador.color.put(v, "BLANCO");
+			buscador.padre.put(v, null);
+		}
+
+
+
+		ArrayList<Integer> cicloMasLargo = buscador.cicloMasLargo();
+
+		System.out.println("El ciclo más largo encontrado es:");
+		System.out.println(cicloMasLargo);
 	}
+	*/
+	/*
+	todo: probando ejercicio hecho en papel
+	 */
+		// Crear el grafo
+		GrafoDirigido<String> grafo = new GrafoDirigido<>();
+
+		// Agregar vértices (del 1 al 6)
+		for (int i = 1; i <= 6; i++) {
+			grafo.agregarVertice(i);
+		}
+
+		// Agregar arcos - incluyendo al menos 1 ciclo
+		// Ciclo: 3 -> 4 -> 5 -> 3
+		grafo.agregarArco(1, 2, null);
+		grafo.agregarArco(1, 3, null);
+		grafo.agregarArco(2, 4, null);
+		grafo.agregarArco(3, 4, null);
+		grafo.agregarArco(4, 5, null);
+		grafo.agregarArco(5, 3, null); // <-- ciclo
+		grafo.agregarArco(5, 6, null);
+
+		// Crear el objeto DFSRecorrido
+		DFSRecorrido<String> dfs = new DFSRecorrido<>(grafo);
+
+		// Buscar el camino más largo de 1 a 6
+		ArrayList<Integer> caminoMasLargo = dfs.caminoMasLargo(grafo, 1, 6);
+
+		// Imprimir el camino más largo
+		System.out.println("Camino más largo de 1 a 6:");
+		for (Integer v : caminoMasLargo) {
+			System.out.print(v + " ");
+		}
+		System.out.println();
+
+		// Imprimir tiempos de descubrimiento y finalización
+		System.out.println("\nTiempos de los vértices:");
+		for (int i = 1; i <= 6; i++) {
+			Integer td = dfs.tiempoDescubrimiento.getOrDefault(i, -1);
+			Integer tf = dfs.tiempoFinalizacion.getOrDefault(i, -1);
+			System.out.println("Vertice " + i + " → Descubrimiento: " + td + ", Finalización: " + tf);
+		}
+
+
+
+
+	}
+
 }
 
 

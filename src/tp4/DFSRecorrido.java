@@ -17,6 +17,30 @@ public class DFSRecorrido<T> {
     protected int tiempo;
     protected Map<T, Integer> duracionTareas;
 
+    public DFSRecorrido(Grafo<T> grafo) {
+        this.grafo = grafo;
+        this.color = new HashMap<>();
+        this.tiempoDescubrimiento = new HashMap<>();
+        this.tiempoFinalizacion = new HashMap<>();
+        this.tiempo = 0;
+
+
+        Iterator<Integer> it = grafo.obtenerVertices();
+        while (it.hasNext()) {
+            int v = it.next();
+            color.put(v, "BLANCO");
+        }
+
+        Iterator<Integer> itt = grafo.obtenerVertices();
+        while (itt.hasNext()) {
+            int v = itt.next();
+            tiempoDescubrimiento.put(v, 0);
+            tiempoFinalizacion.put(v, 0);
+        }
+        tiempo = 0; // reseteás el contador global también
+
+
+    }
 
     public DFSRecorrido(Grafo<T> grafo, Map<T, Integer> duracionTareas) {
         this.grafo = grafo;
@@ -31,12 +55,22 @@ public class DFSRecorrido<T> {
             int v = it.next();
             color.put(v, "BLANCO");
         }
+
+        Iterator<Integer> itt = grafo.obtenerVertices();
+        while (itt.hasNext()) {
+            int v = itt.next();
+            tiempoDescubrimiento.put(v, 0);
+            tiempoFinalizacion.put(v, 0);
+        }
+        tiempo = 0; // reseteás el contador global también
+
     }
 
-    public void dfs() {
+
+    public void dfs() { // complejidad completa  O(V + E)
         ///Al grafo le pide un iterador con todos sus vertices
-        Iterator<Integer> it = grafo.obtenerVertices();
-        while (it.hasNext()) {///  mientras tenga vertices Siguientes
+        Iterator<Integer> it = grafo.obtenerVertices();// Complejidad : O(N)
+        while (it.hasNext()) {///  mientras tenga vertices Siguientes Complejidad : O(N)
             int u = it.next();///extrae el vertice siguiente
             if (color.get(u).equals("BLANCO")) {
                 dfsVisit(u);///Si es blanco empezamos a ejecutar dfsVisit desde ese vertice
@@ -49,9 +83,9 @@ public class DFSRecorrido<T> {
         tiempo++;
         tiempoDescubrimiento.put(u, tiempo);/// suma tiempo y setea a ese vertice
 
-        Iterator<Integer> adyacentes = grafo.obtenerAdyacentes(u);/// le pide los adyacentes
+        Iterator<Integer> adyacentes = grafo.obtenerAdyacentes(u);/// le pide los adyacentes Complejidad : O(d(u))
         while (adyacentes.hasNext()) {/// mientras tenga adyacentes siguientes
-            int v = adyacentes.next();
+            int v = adyacentes.next(); //Complejidad : O(d(u))
             if (color.get(v).equals("BLANCO")) {/// Si el adyacente es blanco hay que volver a ejecutar el dfsVisit
                 dfsVisit(v);
             }
@@ -61,7 +95,10 @@ public class DFSRecorrido<T> {
         tiempo++;
         tiempoFinalizacion.put(u, tiempo);/// sumo tiempo  seteo
     }
-     /*Escribir un algoritmo que, dado un grafo dirigido y dos vértices i, j de este grafo, devuelva el
+
+
+     /* TODO: EJERCICIO 4
+     Escribir un algoritmo que, dado un grafo dirigido y dos vértices i, j de este grafo, devuelva el
     camino simple (sin ciclos) de mayor longitud del vértice i al vértice j. Puede suponerse que el
     grafo de entrada es acíclico.
 
@@ -106,7 +143,70 @@ public class DFSRecorrido<T> {
 
     }
 
-    /*Escriba un algoritmo que dado un grafo G y un vértice v de dicho grafo, devuelva una lista
+    /*TODO EJERCICO 4 CON TIEMPOS HECHO EN PAPEL
+   Escribir un algoritmo que, dado un grafo dirigido y dos vértices i, j de este grafo, devuelva el
+    camino simple (sin ciclos) de mayor longitud del vértice i al vértice j.
+    y Tambien se lleve un registro de los tiempos de descubrimiento de los vertices.
+
+     */
+    public ArrayList<Integer> caminoMasLargo (GrafoDirigido g, int origen, int destino){
+
+
+        ArrayList<Integer> restulado = new ArrayList<>();
+        ArrayList<Integer> camino = new ArrayList<>();
+
+        if(g == null || origen == destino){
+            return new ArrayList<>();
+        }
+        caminoLargo(g,origen,destino,restulado,camino);
+     return restulado;
+    }
+
+    private void caminoLargo(GrafoDirigido g, int actual, int destino, ArrayList<Integer> resultado , ArrayList<Integer> camino){
+        color.put(actual,"AMARILLO");
+        tiempo ++;
+        tiempoDescubrimiento.put(actual,tiempo);
+
+        camino.add(actual);
+
+        if(actual == destino){
+
+            if (camino.size() > resultado.size()){
+                resultado.clear();
+                resultado.addAll(new ArrayList<>(camino));
+            }
+
+        }
+        else{
+
+            Iterator<Integer> ady = g.obtenerAdyacentes(actual);
+            while(ady.hasNext()){
+                int v = ady.next();
+
+                if(color.get(v).equals("BLANCO")){
+
+                    caminoLargo(g,v,destino,resultado,camino);
+
+                }
+                else if (color.get(v).equals("AMARILLO")) {
+                    System.out.println("Hay ciclo");
+                }
+
+
+            }
+
+        }
+        tiempo ++;
+        tiempoFinalizacion.put(actual,tiempo);
+        color.put(actual,"BLANCO");
+        camino.remove(camino.size()-1);
+    }
+
+
+
+
+    /* TODO: EJERCICIO 5
+    Escriba un algoritmo que dado un grafo G y un vértice v de dicho grafo, devuelva una lista
     con todos los vértices a partir de los cuales exista un camino en G que termine en v.
      */
     public Set<Integer> buscarOrigenes(Grafo<T> ggrafo, Integer destino){
@@ -140,7 +240,7 @@ public class DFSRecorrido<T> {
         color.put(v,"BLANCO");
     }
 
-    /// EJERCICIO 8:
+    //TODO: EJERCICIO 8:
 /// este metodo en un grafo dirigido encuentra el camino mas largo sumando los valores  asignados a cada vertice y a sus arcos
     public Integer DFSCaminoCritico(){
         Integer resultado= 0;
@@ -182,6 +282,23 @@ public class DFSRecorrido<T> {
         color.put(vp,"BLANCO");
         return resultado;
 
+    }
+    public void iniciarlizarColores(){
+        Iterator<Integer> it = grafo.obtenerVertices();
+        while (it.hasNext()) {
+            int v = it.next();
+            color.put(v, "BLANCO");
+        }
+
+    }
+    public void inicializarTiempos() {
+        Iterator<Integer> it = grafo.obtenerVertices();
+        while (it.hasNext()) {
+            int v = it.next();
+            tiempoDescubrimiento.put(v, 0);
+            tiempoFinalizacion.put(v, 0);
+        }
+        tiempo = 0; // reseteás el contador global también
     }
 
 

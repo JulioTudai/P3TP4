@@ -31,6 +31,7 @@ public class MainBack {
  */
 
         /// EJERCICIO 3
+        ArrayList<ArrayList<Integer>> asd = new ArrayList<ArrayList<Integer>>(5);
 
         ArrayList<Integer> valores = new ArrayList<>();
 
